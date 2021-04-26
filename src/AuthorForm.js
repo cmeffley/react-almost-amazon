@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import createAuthor from './helpers/data/AuthorData';
+import PropTypes from 'prop-types';
+import { createAuthor } from './helpers/data/AuthorData';
 
-export default function AuthorForm() {
+export default function AuthorForm({ formTitle }) {
   const [author, setAuthor] = useState({
     first_name: '',
     last_name: '',
@@ -28,7 +29,7 @@ export default function AuthorForm() {
           autoComplete="off"
           onSubmit={handleSubmit}
           >
-          <h2>New Author</h2>
+          <h2>{formTitle}</h2>
           <label>First Name: </label>
           <input
             name="first_name"
@@ -59,3 +60,7 @@ export default function AuthorForm() {
     </>
   );
 }
+
+AuthorForm.propTypes = {
+  formTitle: PropTypes.string.isRequired
+};

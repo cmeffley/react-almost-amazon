@@ -1,15 +1,27 @@
-import React from 'react';
-import firebase from 'firebase';
-import firebaseConfig from '../helpers/apiKeys';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 import AuthorForm from '../AuthorForm';
+import AuthorCard from '../components/AuthorCard';
+import { getAuthor } from '../helpers/data/AuthorData';
 
 function App() {
-  firebase.initializeApp(firebaseConfig);
+  const [author, setAuthor] = useState([]);
+
+  useEffect(() => {
+    getAuthor().then((response) => setAuthor(response));
+  }, []);
 
   return (
     <div className='App'>
-      <AuthorForm />
+      <AuthorForm formTitle='Add Author'/>
+      <hr/>
+      {author.map((authorInfo) => (
+        <AuthorCard
+          key={authorInfo.firebaseKey}
+          first_name={authorInfo.first_name}
+          last_name={authorInfo.last_name}
+          email={authorInfo.email}/>
+      ))}
     </div>
   );
 }
