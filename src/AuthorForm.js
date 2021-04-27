@@ -1,12 +1,21 @@
+/* eslint-disable camelcase */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { createAuthor } from './helpers/data/AuthorData';
+import { createAuthor, updateAuthor } from './helpers/data/AuthorData';
 
-export default function AuthorForm({ formTitle }) {
+export default function AuthorForm({
+  formTitle,
+  setAuthors,
+  first_name,
+  last_name,
+  email,
+  firebaseKey
+}) {
   const [author, setAuthor] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
+    first_name: first_name || '',
+    last_name: last_name || '',
+    email: email || '',
+    firebaseKey: firebaseKey || null
   });
 
   const handleInputChanges = (e) => {
@@ -18,7 +27,11 @@ export default function AuthorForm({ formTitle }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createAuthor(author);
+    if (author.firebaseKey) {
+      updateAuthor(author).then((authorArray) => setAuthors(authorArray));
+    } else {
+      createAuthor(author).then((authorArray) => setAuthors(authorArray));
+    }
   };
 
   return (
@@ -30,6 +43,7 @@ export default function AuthorForm({ formTitle }) {
           onSubmit={handleSubmit}
           >
           <h2>{formTitle}</h2>
+        <div>
           <label>First Name: </label>
           <input
             name="first_name"
@@ -38,6 +52,8 @@ export default function AuthorForm({ formTitle }) {
             value={author.first_name}
             onChange={handleInputChanges}
           ></input>
+        </div>
+        <div>
           <label>Last Name: </label>
           <input
             name="last_name"
@@ -46,6 +62,8 @@ export default function AuthorForm({ formTitle }) {
             value={author.last_name}
             onChange={handleInputChanges}
           ></input>
+        </div>
+        <div>
           <label>Email: </label>
           <input
             name="email"
@@ -53,7 +71,8 @@ export default function AuthorForm({ formTitle }) {
             placeholder="Email"
             value={author.email}
             onChange={handleInputChanges}
-          ></input><br />
+          ></input>
+        </div>
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -62,5 +81,10 @@ export default function AuthorForm({ formTitle }) {
 }
 
 AuthorForm.propTypes = {
-  formTitle: PropTypes.string.isRequired
+  formTitle: PropTypes.string.isRequired,
+  setAuthors: PropTypes.func,
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
+  email: PropTypes.string,
+  firebaseKey: PropTypes.string
 };
