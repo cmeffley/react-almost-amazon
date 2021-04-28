@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { createAuthor, updateAuthor } from './helpers/data/AuthorData';
+import { createAuthor, updateAuthor } from '../helpers/data/AuthorData';
 
-export default function AuthorForm({
+const AuthorForm = ({
   formTitle,
   setAuthors,
   first_name,
   last_name,
   email,
   firebaseKey
-}) {
+}) => {
   const [author, setAuthor] = useState({
     first_name: first_name || '',
     last_name: last_name || '',
@@ -41,7 +41,7 @@ export default function AuthorForm({
           id="addAuthorForm"
           autoComplete="off"
           onSubmit={handleSubmit}
-          >
+        >
           <h2>{formTitle}</h2>
         <div>
           <label>First Name: </label>
@@ -78,7 +78,7 @@ export default function AuthorForm({
       </div>
     </>
   );
-}
+};
 
 AuthorForm.propTypes = {
   formTitle: PropTypes.string.isRequired,
@@ -88,3 +88,5 @@ AuthorForm.propTypes = {
   email: PropTypes.string,
   firebaseKey: PropTypes.string
 };
+
+export default AuthorForm;
