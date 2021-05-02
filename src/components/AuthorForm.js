@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createAuthor, updateAuthor } from '../helpers/data/AuthorData';
 
@@ -17,6 +18,7 @@ const AuthorForm = ({
     email: email || '',
     firebaseKey: firebaseKey || null
   });
+  const history = useHistory();
 
   const handleInputChanges = (e) => {
     setAuthor((prevState) => ({
@@ -31,6 +33,13 @@ const AuthorForm = ({
       updateAuthor(author).then((authorArray) => setAuthors(authorArray));
     } else {
       createAuthor(author).then((authorArray) => setAuthors(authorArray));
+      history.push('/authors');
+      setAuthor({
+        first_name: '',
+        last_name: '',
+        email: '',
+        firebaseKey: null
+      });
     }
   };
 
