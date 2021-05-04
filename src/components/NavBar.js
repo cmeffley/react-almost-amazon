@@ -30,12 +30,13 @@ const NavBar = ({ user }) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <Link className='navbar-brand' to="/">React</Link>
+        <NavItem>
+          <Link className='navbar-brand' to="/">React</Link>
+        </NavItem>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             {user && authenticated()}
-            <NavItem>
               {
                 user !== null
                 && <NavItem>
@@ -46,7 +47,6 @@ const NavBar = ({ user }) => {
                   }
                 </NavItem>
               }
-            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>

@@ -36,6 +36,7 @@ function App() {
       <Router>
         <Navbar user={user}/>
         <Routes
+          user={user}
           authors={authors}
           setAuthors={setAuthors}
         />
